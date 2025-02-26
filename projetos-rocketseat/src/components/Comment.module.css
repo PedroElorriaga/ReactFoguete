@@ -4,13 +4,6 @@
     gap: 1.25rem;
 }
 
-.comment img {
-    width: 3.5rem;
-    height: 3.5rem;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
 .conteudo {
     background: var(--gray-700);
     padding: 1.25rem;

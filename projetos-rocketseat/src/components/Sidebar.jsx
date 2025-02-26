@@ -1,3 +1,5 @@
+import { AvatarSidebar } from './Avatar';
+
 import styles from './Sidebar.module.css'
 import { SlEqualizer } from "react-icons/sl";
 
@@ -11,7 +13,9 @@ export function Sidebar(props) {
             />
 
             <div className={styles.profiles}>
-                <img className={styles.avatar} src={props.avatar} />
+                <AvatarSidebar
+                    avatar={props.avatar}
+                />
                 <strong>{props.autor}</strong>
                 <span>{props.cargo}</span>
             </div>
