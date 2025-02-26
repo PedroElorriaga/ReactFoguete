@@ -1,13 +1,7 @@
 import styles from './Avatar.module.css'
 
-export function AvatarSidebar(props) {
+export function Avatar({ feed = true, avatar }) {
     return (
-        <img className={styles.avatarSidebar} src={props.avatar} />
-    )
-}
-
-export function AvatarFeed(props) {
-    return (
-        <img className={styles.avatarFeed} src={props.avatar} />
+        <img className={feed ? styles.avatarFeed : styles.avatarSidebar} src={avatar} />
     )
 }

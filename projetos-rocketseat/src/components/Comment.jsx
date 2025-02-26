@@ -1,4 +1,4 @@
-import { AvatarFeed } from './Avatar';
+import { Avatar } from './Avatar';
 
 import styles from './Comment.module.css'
 import { SlLike } from "react-icons/sl";
@@ -7,7 +7,7 @@ export function Comment(props) {
     return (
         <article>
             <div className={styles.comment}>
-                <AvatarFeed
+                <Avatar
                     avatar={props.avatar}
                 />
                 <div className={styles.conteudo}>
