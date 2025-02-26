@@ -1,0 +1,62 @@
+.comment {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.25rem;
+}
+
+.comment img {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.conteudo {
+    background: var(--gray-700);
+    padding: 1.25rem;
+    border-radius: 8px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo .autor {
+    line-height: 1.8;
+    color: var(--gray-100);
+}
+
+.conteudo time {
+    color: var(--gray-400);
+    font-size: 0.875rem;
+}
+
+.conteudo p {
+    margin-top: 1.5rem;
+}
+
+article button[type='submitComment'] {
+    background: transparent;
+    border: none;
+    color: var(--green-500);
+    margin-left: 80px;
+    cursor: pointer;
+    line-height: 0;
+    margin-top: 1rem;
+    border-radius: 2px;
+
+    transition: color 0.2s;
+}
+
+article button[type='submitComment']:hover {
+    color: var(--green-300);
+}
+
+article button[type='submitComment'] svg {
+    margin-right: 0.5rem;
+}
+
+/* Adiciona um conteudo antes do elemento span */
+article button[type='submitComment'] span::before {
+    content: '\2022';
+    padding: 0 0.25rem;
+}

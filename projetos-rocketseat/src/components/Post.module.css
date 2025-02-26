@@ -1,0 +1,127 @@
+.post {
+    background: var(--gray-800);
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+/* Só aplica para elementos que tenham outro elemento igual entes dele */
+.post+.post {
+    margin-top: 2rem;
+}
+
+.post header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post header time {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+}
+
+.autor {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.autor .avatar {
+    box-sizing: initial;
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: cover;
+    border: 4px solid var(--gray-600);
+    border-radius: 8px;
+}
+
+.autor .autorInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.autor .autorInfo strong {
+    color: var(--gray-100);
+}
+
+.autor .autorInfo span {
+    color: var(--gray-400);
+    font-size: 0.875rem;
+}
+
+.conteudo {
+    line-height: 1.8rem;
+    color: var(--gray-300);
+    margin-top: 1.5rem;
+}
+
+.conteudo p {
+    margin-top: 0.5rem;
+}
+
+.conteudo a {
+    color: var(--green-500);
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.conteudo a:hover {
+    color: var(--green-300);
+}
+
+.commentForm {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.commentForm strong {
+    padding: 2rem 0 1.25rem;
+    border-top: 1px solid var(--gray-600);
+}
+
+.commentForm textarea {
+    background: var(--gray-900);
+    height: 6rem;
+    border: none;
+    border-radius: 8px;
+    padding: 1rem;
+    resize: none;
+}
+
+.commentForm textarea:focus {
+    outline: 2px solid var(--green-500);
+    color: var(--gray-100);
+}
+
+/* Caso nada estiver sendo digitado no TexArea, o botao nao aparece */
+.commentForm .botaoMagico {
+    visibility: hidden;
+    max-height: 0;
+}
+
+/* Caso algo estiver sendo digitado no TexArea, o botao aparece */
+.commentForm:focus-within .botaoMagico {
+    visibility: visible;
+    max-height: none;
+}
+
+.commentForm button[type='submit'] {
+    background: var(--green-500);
+    color: var(--white);
+    margin-top: 1rem;
+    width: 20%;
+    padding: 1rem;
+    border: 1px solid var(--green-500);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+
+    transition: background 0.2s;
+}
+
+.commentForm button[type='submit']:hover {
+    background: var(--green-300);
+}

@@ -1,0 +1,13 @@
+.wrapper {
+    max-width: 70rem;
+    /* Margem de 32px de altura e centralizado as laterais */
+    margin: 2rem auto;
+    padding: 0 1rem;
+
+    display: grid;
+    /* A primeira coluna tem uma largura fiza de 256px e a segunda coluna se adpta para quantos couber na tela 1fr/tamanho flexivel */
+    grid-template-columns: 256px 1fr;
+    gap: 2rem;
+    /* Para que as colunas sempre fiquem alinhadas para o top, e não forçar com que uma coluna tenha o mesmo tamanho que a outra */
+    align-items: flex-start;
+}
