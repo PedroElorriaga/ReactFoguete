@@ -5,9 +5,21 @@
     padding: 0 1rem;
 
     display: grid;
-    /* A primeira coluna tem uma largura fiza de 256px e a segunda coluna se adpta para quantos couber na tela 1fr/tamanho flexivel */
+    /* A primeira coluna tem uma largura fixa de 256px e a segunda coluna se adapta para quantos couber na tela 1fr/tamanho flexivel */
     grid-template-columns: 256px 1fr;
     gap: 2rem;
     /* Para que as colunas sempre fiquem alinhadas para o top, e não forçar com que uma coluna tenha o mesmo tamanho que a outra */
     align-items: flex-start;
+}
+
+/* Regra é aplicada quando o tamanho da largura é menor que 767px */
+@media (max-width: 767px) {
+    html {
+        /* QUERIAMOS 14px em %, então fizemos regra de 3 -> 14*100/16 (16 que é igual aos 1rem que usamos) */
+        font-size: 87.5%;
+    }
+
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
 }
