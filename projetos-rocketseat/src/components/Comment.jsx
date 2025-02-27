@@ -11,9 +11,9 @@ export function Comment(props) {
                     avatar={props.avatar}
                 />
                 <div className={styles.conteudo}>
-                    <strong className={styles.autor}>{props.autor}</strong>
-                    <time>Há 10 Minutos</time>
-                    <p>A foto ficou incrivel mesmo!</p>
+                    <strong className={styles.autor}>{props.nome}</strong>
+                    <time>{props.postadoEm}</time>
+                    <p>{props.conteudo}</p>
                 </div>
             </div>
             <button type='submitComment'>

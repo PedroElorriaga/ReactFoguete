@@ -3,28 +3,42 @@ import { Avatar } from './Avatar'
 
 import styles from './Post.module.css'
 
+const formatarData = (dateString) => {
+    const data = new Date(dateString)
+    const dataAgora = new Date();
+    const dataEmSeg = Math.floor((dataAgora - data) / 1000)
+
+    if (dataEmSeg < 60) return `Há ${dataEmSeg}s atrás`
+
+    const dataEmMin = Math.floor(dataEmSeg / 60)
+    if (dataEmMin < 60) return `Há ${dataEmMin}m atrás`
+
+    const dataEmHoras = Math.floor(dataEmMin / 60)
+    if (dataEmHoras < 24) return `Há ${dataEmHoras}h atrás`
+
+    const dataEmDias = Math.floor(dataEmHoras / 24)
+    return `Há ${dataEmDias}d atrás`
+}
+
 export function Post(props) {
     return (
         <article className={styles.post}>
             <header>
                 <div className={styles.autor}>
                     <Avatar
-                        avatar={props.avatar}
+                        avatar={props.autor.avatar}
                     />
                     <div className={styles.autorInfo}>
-                        <strong>{props.autor}</strong>
-                        <span>{props.cargo}</span>
+                        <strong>{props.autor.nome}</strong>
+                        <span>{props.autor.cargo}</span>
                     </div>
                 </div>
 
-                <time dateTime={props.time}>Publicado há 44 Minutos</time>
+                <time dateTime={props.postadoEm}>{formatarData(props.postadoEm)}</time>
             </header>
 
             <div className={styles.conteudo}>
-                <p>Veja como fiz essa captura</p>
-                <p>Era mais um dia da minha jornada, quando derrepente vejo um casal de pardais</p>
-                <p>Ainda bem, consegui registrar este momento lindo!</p>
-                <p><a href="#">#Passaros #Paisagem</a></p>
+                <p>{props.conteudo}</p>
             </div>
 
             <form className={styles.commentForm}>
@@ -36,16 +50,16 @@ export function Post(props) {
                     <button type='submit'>Enviar</button>
                 </div>
             </form>
-
-            <Comment
-                avatar='https://github.com/caiodev.png'
-                autor='Caio Henrique'
-            />
-
-            <Comment
-                avatar='https://github.com/julia.png'
-                autor='Julia Potassio'
-            />
+            {props.comentarios ? props.comentarios.map(prop => {
+                return (
+                    <Comment
+                        nome={prop.autor.nome}
+                        avatar={prop.autor.avatar}
+                        postadoEm={formatarData(prop.postadoEm)}
+                        conteudo={prop.conteudo}
+                    />
+                )
+            }) : null}
         </article>
     )
 }
