@@ -10,7 +10,7 @@ import styles from './Post.module.css'
 export function Post(props) {
     // STATE Fica a nivel de escopo do componente, ou seja, adiciona o comentario somente no "Post" atual
     const [comentarios, setComentarios] = useState(props.comentarios || [])
-    const [conteudo, setConteudo] = useState('')
+    const [conteudoComentario, setConteudoComentario] = useState('')
 
     // Usando biblioteca date-fns
     const formatarDataString = format(new Date(props.postadoEm), "d 'de' MMM 'de' yyy 'as' HH'h'", {
@@ -24,7 +24,7 @@ export function Post(props) {
 
     function handleSubmitFormulario() {
         event.preventDefault()
-        if (!conteudo) return
+        if (!conteudoComentario) return
 
         const novoComentario = {
             autor: {
@@ -32,11 +32,11 @@ export function Post(props) {
                 avatar: 'https://github.com/pedroElorriaga.png'
             },
             postadoEm: Date.now(),
-            conteudo: conteudo
+            conteudo: conteudoComentario
         }
 
         setComentarios([...comentarios, novoComentario])
-        setConteudo('')
+        setConteudoComentario('')
     }
 
     return (
@@ -62,7 +62,7 @@ export function Post(props) {
             <form onSubmit={handleSubmitFormulario} className={styles.commentForm}>
                 <strong>Comentar sobre</strong>
 
-                <textarea value={conteudo} onChange={(e) => setConteudo(e.target.value)} placeholder='Que imagem incrivel !!' />
+                <textarea value={conteudoComentario} onChange={(e) => setConteudoComentario(e.target.value)} placeholder='Que imagem incrivel !!' />
 
                 <div className={styles.botaoMagico}>
                     <button type='submit'>Enviar</button>
