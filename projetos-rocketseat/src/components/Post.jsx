@@ -4,6 +4,7 @@ import { Avatar } from './Avatar'
 import styles from './Post.module.css'
 
 export function Post(props) {
+    // Forma que fiz com os elementos do proprio JS
     const formatarData = (dateString) => {
         const data = new Date(dateString)
         const dataAgora = new Date();
