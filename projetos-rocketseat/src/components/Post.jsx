@@ -3,24 +3,24 @@ import { Avatar } from './Avatar'
 
 import styles from './Post.module.css'
 
-const formatarData = (dateString) => {
-    const data = new Date(dateString)
-    const dataAgora = new Date();
-    const dataEmSeg = Math.floor((dataAgora - data) / 1000)
-
-    if (dataEmSeg < 60) return `Há ${dataEmSeg}s atrás`
-
-    const dataEmMin = Math.floor(dataEmSeg / 60)
-    if (dataEmMin < 60) return `Há ${dataEmMin}m atrás`
-
-    const dataEmHoras = Math.floor(dataEmMin / 60)
-    if (dataEmHoras < 24) return `Há ${dataEmHoras}h atrás`
-
-    const dataEmDias = Math.floor(dataEmHoras / 24)
-    return `Há ${dataEmDias}d atrás`
-}
-
 export function Post(props) {
+    const formatarData = (dateString) => {
+        const data = new Date(dateString)
+        const dataAgora = new Date();
+        const dataEmSeg = Math.floor((dataAgora - data) / 1000)
+
+        if (dataEmSeg < 60) return `Há ${dataEmSeg}s atrás`
+
+        const dataEmMin = Math.floor(dataEmSeg / 60)
+        if (dataEmMin < 60) return `Há ${dataEmMin}m atrás`
+
+        const dataEmHoras = Math.floor(dataEmMin / 60)
+        if (dataEmHoras < 24) return `Há ${dataEmHoras}h atrás`
+
+        const dataEmDias = Math.floor(dataEmHoras / 24)
+        return `Há ${dataEmDias}d atrás`
+    }
+
     return (
         <article className={styles.post}>
             <header>
