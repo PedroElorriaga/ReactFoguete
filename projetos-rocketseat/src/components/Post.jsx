@@ -1,24 +1,42 @@
+import { format, formatDistanceToNow } from 'date-fns'
+import ptBr from 'date-fns/locale/pt-BR'
+import { useState } from 'react'
+
 import { Comment } from './Comment'
 import { Avatar } from './Avatar'
 
 import styles from './Post.module.css'
 
 export function Post(props) {
-    const formatarData = (dateString) => {
-        const data = new Date(dateString)
-        const dataAgora = new Date();
-        const dataEmSeg = Math.floor((dataAgora - data) / 1000)
+    // STATE Fica a nivel de escopo do componente, ou seja, adiciona o comentario somente no "Post" atual
+    const [comentarios, setComentarios] = useState(props.comentarios || [])
+    const [conteudo, setConteudo] = useState('')
 
-        if (dataEmSeg < 60) return `Há ${dataEmSeg}s atrás`
+    // Usando biblioteca date-fns
+    const formatarDataString = format(new Date(props.postadoEm), "d 'de' MMM 'de' yyy 'as' HH'h'", {
+        locale: ptBr
+    })
 
-        const dataEmMin = Math.floor(dataEmSeg / 60)
-        if (dataEmMin < 60) return `Há ${dataEmMin}m atrás`
+    const calcularTempoDeEnvio = (data = props.postadoEm) => formatDistanceToNow(new Date(data), {
+        locale: ptBr,
+        addSuffix: true
+    })
 
-        const dataEmHoras = Math.floor(dataEmMin / 60)
-        if (dataEmHoras < 24) return `Há ${dataEmHoras}h atrás`
+    function handleSubmitFormulario() {
+        event.preventDefault()
+        if (!conteudo) return
 
-        const dataEmDias = Math.floor(dataEmHoras / 24)
-        return `Há ${dataEmDias}d atrás`
+        const novoComentario = {
+            autor: {
+                nome: 'Pedro Elorriaga',
+                avatar: 'https://github.com/pedroElorriaga.png'
+            },
+            postadoEm: Date.now(),
+            conteudo: conteudo
+        }
+
+        setComentarios([...comentarios, novoComentario])
+        setConteudo('')
     }
 
     return (
@@ -34,28 +52,28 @@ export function Post(props) {
                     </div>
                 </div>
 
-                <time dateTime={props.postadoEm}>{formatarData(props.postadoEm)}</time>
+                <time title={formatarDataString} dateTime={props.postadoEm.toISOString()}>{calcularTempoDeEnvio()}</time>
             </header>
 
             <div className={styles.conteudo}>
                 <p>{props.conteudo}</p>
             </div>
 
-            <form className={styles.commentForm}>
+            <form onSubmit={handleSubmitFormulario} className={styles.commentForm}>
                 <strong>Comentar sobre</strong>
 
-                <textarea placeholder='Que imagem incrivel !!' />
+                <textarea value={conteudo} onChange={(e) => setConteudo(e.target.value)} placeholder='Que imagem incrivel !!' />
 
                 <div className={styles.botaoMagico}>
                     <button type='submit'>Enviar</button>
                 </div>
             </form>
-            {props.comentarios ? props.comentarios.map(prop => {
+            {comentarios ? comentarios.map(prop => {
                 return (
                     <Comment
                         nome={prop.autor.nome}
                         avatar={prop.autor.avatar}
-                        postadoEm={formatarData(prop.postadoEm)}
+                        postadoEm={calcularTempoDeEnvio(prop.postadoEm)}
                         conteudo={prop.conteudo}
                     />
                 )

@@ -22,7 +22,7 @@ const postsFromApi = [
           nome: 'Caio Henrique',
           avatar: 'https://github.com/caiodev.png'
         },
-        postadoEm: new Date('2025-02-26T23:00:00'),
+        postadoEm: new Date('2025-03-01T17:00:00'),
         conteudo: 'Caramba, ficou incrivel mesmo!!'
       },
       {
