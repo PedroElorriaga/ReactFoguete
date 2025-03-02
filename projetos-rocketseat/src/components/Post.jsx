@@ -24,9 +24,10 @@ export function Post(props) {
 
     function handleSubmitFormulario() {
         event.preventDefault()
-        if (!conteudoComentario) return
+        if (!conteudoComentario.trim()) return
 
         const novoComentario = {
+            idComentario: comentarios.length + 1,
             autor: {
                 nome: 'Pedro Elorriaga',
                 avatar: 'https://github.com/pedroElorriaga.png'
@@ -37,6 +38,15 @@ export function Post(props) {
 
         setComentarios([...comentarios, novoComentario])
         setConteudoComentario('')
+    }
+
+    function deleteComentario(idComentario) {
+        // Imutabilidade, no react nunca mudamos uma informação, sempre criamos uma nova informação
+        const listaSemComentarioDeletado = comentarios.filter(comentario => {
+            if (comentario.idComentario != idComentario) return comentario
+        })
+
+        setComentarios(listaSemComentarioDeletado)
     }
 
     return (
@@ -62,7 +72,13 @@ export function Post(props) {
             <form onSubmit={handleSubmitFormulario} className={styles.commentForm}>
                 <strong>Comentar sobre</strong>
 
-                <textarea value={conteudoComentario} onChange={(e) => setConteudoComentario(e.target.value)} placeholder='Que imagem incrivel !!' />
+                <textarea
+                    value={conteudoComentario}
+                    onChange={(e) => { setConteudoComentario(e.target.value), e.target.setCustomValidity('') }}
+                    placeholder='Que imagem incrivel !!'
+                    onInvalid={(e) => console.log(e.target.setCustomValidity('O preenchimento é obrigatório'))}
+                    required
+                />
 
                 <div className={styles.botaoMagico}>
                     <button type='submit'>Enviar</button>
@@ -71,11 +87,13 @@ export function Post(props) {
             {comentarios ? comentarios.map(prop => {
                 return (
                     <Comment
-                        key={prop.postadoEm}
+                        key={prop.idComentario}
+                        idComentario={prop.idComentario}
                         nome={prop.autor.nome}
                         avatar={prop.autor.avatar}
                         postadoEm={calcularTempoDeEnvio(prop.postadoEm)}
                         conteudo={prop.conteudo}
+                        onDeleteComentario={deleteComentario}
                     />
                 )
             }) : null}

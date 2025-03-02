@@ -18,6 +18,23 @@
     color: var(--gray-100);
 }
 
+.conteudo .autor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conteudo .autor .deleteIcon {
+    cursor: pointer;
+    color: var(--gray-400);
+
+    transition: color 0.2s;
+}
+
+.conteudo .autor .deleteIcon:hover {
+    color: var(--red);
+}
+
 .conteudo time {
     color: var(--gray-400);
     font-size: 0.875rem;

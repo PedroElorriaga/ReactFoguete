@@ -18,6 +18,7 @@ const postsFromApi = [
     conteudo: 'Veja como fiz essa captura Era mais um dia da minha jornada, quando derrepente vejo um casal de pardais Ainda bem, consegui registrar este momento lindo!',
     comentarios: [
       {
+        idComentario: 1,
         autor: {
           nome: 'Caio Henrique',
           avatar: 'https://github.com/caiodev.png'
@@ -26,6 +27,7 @@ const postsFromApi = [
         conteudo: 'Caramba, ficou incrivel mesmo!!'
       },
       {
+        idComentario: 2,
         autor: {
           nome: 'Julia Potassio',
           avatar: 'https://github.com/julia.png'
