@@ -33,8 +33,7 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
-      'react/prop-types': 0,
-      "react/jsx-key": ['off', { "checkFragmentShorthand": true }]
+      'react/prop-types': 0
     },
   },
 ]

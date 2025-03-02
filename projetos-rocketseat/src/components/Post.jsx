@@ -54,6 +54,7 @@ export function Post(props) {
             {props.comentarios ? props.comentarios.map(prop => {
                 return (
                     <Comment
+                        key={prop.postadoEm}
                         nome={prop.autor.nome}
                         avatar={prop.autor.avatar}
                         postadoEm={formatarData(prop.postadoEm)}
