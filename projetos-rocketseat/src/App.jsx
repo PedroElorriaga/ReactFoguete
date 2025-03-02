@@ -63,6 +63,7 @@ function App() {
           {postsFromApi.map(post => {
             return (
               <Post
+                key={post.id}
                 autor={post.autor}
                 postadoEm={post.postadoEm}
                 conteudo={post.conteudo}
