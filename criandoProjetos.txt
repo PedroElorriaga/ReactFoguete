@@ -1,0 +1,7 @@
+## Para criar projetos React, estamos utilizando Vite
+
+npm create vite@latest
+
+## Entramos na pasta do projeto criado e ja de cara instalamos as dependencias
+
+npm i

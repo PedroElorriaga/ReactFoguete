@@ -1,0 +1,21 @@
+.avatarSidebar {
+    /* Define que a borda não ira comprimir meu elemento dentro */
+    box-sizing: initial;
+    width: 3.75rem;
+    object-fit: cover;
+    height: 3.75rem;
+    margin: -40px 0 20px;
+    border-radius: 8px;
+    border: 4px solid var(--gray-600);
+    /* Borda ao redor */
+    outline: 1px solid var(--green-500);
+}
+
+.avatarFeed {
+    box-sizing: initial;
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: cover;
+    border: 2px solid var(--gray-600);
+    border-radius: 8px;
+}

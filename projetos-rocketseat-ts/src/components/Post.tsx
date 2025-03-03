@@ -1,28 +1,51 @@
 import { format, formatDistanceToNow } from 'date-fns'
-import ptBr from 'date-fns/locale/pt-BR'
-import { useState } from 'react'
+import { ptBR } from 'date-fns/locale/pt-BR'
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
 
 import { Comment } from './Comment'
 import { Avatar } from './Avatar'
 
 import styles from './Post.module.css'
 
-export function Post(props) {
+interface Comentario {
+    idComentario: number,
+    autor: {
+        nome: string,
+        avatar: string
+    },
+    postadoEm: Date,
+    conteudo: string,
+    likeCount: number
+}
+
+// Declarando o tipo das Props do post
+interface PostProps {
+    autor: {
+        nome: string,
+        cargo: string,
+        avatar: string
+    },
+    postadoEm: Date,
+    conteudo: string,
+    comentarios: Comentario[]
+}
+
+export function Post(props: PostProps) {
     // STATE Fica a nivel de escopo do componente, ou seja, adiciona o comentario somente no "Post" atual
     const [comentarios, setComentarios] = useState(props.comentarios || [])
     const [conteudoComentario, setConteudoComentario] = useState('')
 
     // Usando biblioteca date-fns
     const formatarDataString = format(new Date(props.postadoEm), "d 'de' MMM 'de' yyy 'as' HH'h'", {
-        locale: ptBr
+        locale: ptBR
     })
 
     const calcularTempoDeEnvio = (data = props.postadoEm) => formatDistanceToNow(new Date(data), {
-        locale: ptBr,
+        locale: ptBR,
         addSuffix: true
     })
 
-    function handleSubmitFormulario() {
+    function handleSubmitFormulario(event: FormEvent) {
         event.preventDefault()
         if (!conteudoComentario.trim()) return
 
@@ -32,7 +55,7 @@ export function Post(props) {
                 nome: 'Pedro Elorriaga',
                 avatar: 'https://github.com/pedroElorriaga.png'
             },
-            postadoEm: Date.now(),
+            postadoEm: new Date(Date.now()), //Alterado, pois Date.now() é um number e não um dado do tipo Date
             conteudo: conteudoComentario,
             likeCount: 0
         }
@@ -41,7 +64,16 @@ export function Post(props) {
         setConteudoComentario('')
     }
 
-    function deleteComentario(idComentario) {
+    function handleChangeConteudoComentario(event: ChangeEvent<HTMLTextAreaElement>) {
+        setConteudoComentario(event.target.value)
+        event.target.setCustomValidity('')
+    }
+
+    function handleInvalidConteudoComentario(event: InvalidEvent<HTMLTextAreaElement>) {
+        event.target.setCustomValidity('O preenchimento é obrigatório')
+    }
+
+    function deleteComentario(idComentario: number) {
         // Imutabilidade, no react nunca mudamos uma informação, sempre criamos uma nova informação
         const listaSemComentarioDeletado = comentarios.filter(comentario => {
             if (comentario.idComentario != idComentario) return comentario
@@ -50,7 +82,7 @@ export function Post(props) {
         setComentarios(listaSemComentarioDeletado)
     }
 
-    function icrementarLikeComentario(idComentario) {
+    function incrementarLikeComentario(idComentario: number) {
         const listaComComentarioAtualizado = comentarios.map(comentario =>
             comentario.idComentario == idComentario
                 ? { ...comentario, likeCount: comentario.likeCount + 1 } // Uso do spread, mantendo o imutabilidadee ( Feito com ajuda de AI )
@@ -85,14 +117,14 @@ export function Post(props) {
 
                 <textarea
                     value={conteudoComentario}
-                    onChange={(e) => { setConteudoComentario(e.target.value), e.target.setCustomValidity('') }}
+                    onChange={handleChangeConteudoComentario}
                     placeholder='Que imagem incrivel !!'
-                    onInvalid={(e) => e.target.setCustomValidity('O preenchimento é obrigatório')}
+                    onInvalid={handleInvalidConteudoComentario}
                     required
                 />
 
                 <div className={styles.botaoMagico}>
-                    <button type='submit'>Enviar</button>
+                    <button className={styles.botaoComentario} type='submit'>Enviar</button>
                 </div>
             </form>
             {comentarios ? comentarios.map(prop => {
@@ -106,7 +138,7 @@ export function Post(props) {
                         conteudo={prop.conteudo}
                         onDeleteComentario={deleteComentario}
                         likeCount={prop.likeCount}
-                        onicrementarLikeComentario={icrementarLikeComentario}
+                        onincrementarLikeComentario={incrementarLikeComentario}
                     />
                 )
             }) : null}
