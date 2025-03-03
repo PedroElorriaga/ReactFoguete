@@ -33,7 +33,8 @@ export function Post(props) {
                 avatar: 'https://github.com/pedroElorriaga.png'
             },
             postadoEm: Date.now(),
-            conteudo: conteudoComentario
+            conteudo: conteudoComentario,
+            likeCount: 0
         }
 
         setComentarios([...comentarios, novoComentario])
@@ -47,6 +48,16 @@ export function Post(props) {
         })
 
         setComentarios(listaSemComentarioDeletado)
+    }
+
+    function icrementarLikeComentario(idComentario) {
+        const listaComComentarioAtualizado = comentarios.map(comentario =>
+            comentario.idComentario == idComentario
+                ? { ...comentario, likeCount: comentario.likeCount + 1 } // Uso do spread, mantendo o imutabilidadee ( Feito com ajuda de AI )
+                : comentario
+        )
+
+        setComentarios(listaComComentarioAtualizado)
     }
 
     return (
@@ -94,6 +105,8 @@ export function Post(props) {
                         postadoEm={calcularTempoDeEnvio(prop.postadoEm)}
                         conteudo={prop.conteudo}
                         onDeleteComentario={deleteComentario}
+                        likeCount={prop.likeCount}
+                        onicrementarLikeComentario={icrementarLikeComentario}
                     />
                 )
             }) : null}

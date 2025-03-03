@@ -24,7 +24,8 @@ const postsFromApi = [
           avatar: 'https://github.com/caiodev.png'
         },
         postadoEm: new Date('2025-03-01T17:00:00'),
-        conteudo: 'Caramba, ficou incrivel mesmo!!'
+        conteudo: 'Caramba, ficou incrivel mesmo!!',
+        likeCount: 2
       },
       {
         idComentario: 2,
@@ -33,7 +34,8 @@ const postsFromApi = [
           avatar: 'https://github.com/julia.png'
         },
         postadoEm: new Date('2025-02-26T21:20:00'),
-        conteudo: 'Vou usar de fundo de tela hahaha'
+        conteudo: 'Vou usar de fundo de tela hahaha',
+        likeCount: 33
       }
     ]
   },

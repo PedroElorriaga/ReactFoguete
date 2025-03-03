@@ -8,6 +8,10 @@ export function Comment(props) {
         props.onDeleteComentario(props.idComentario)
     }
 
+    function handleLikeComentario() {
+        props.onicrementarLikeComentario(props.idComentario)
+    }
+
     return (
         <article>
             <div className={styles.comment}>
@@ -26,9 +30,9 @@ export function Comment(props) {
                     <p>{props.conteudo}</p>
                 </div>
             </div>
-            <button type='submitComment'>
+            <button type='submitComment' onClick={handleLikeComentario}>
                 <SlLike size={15} />
-                Gostei<span>5</span>
+                Gostei<span>{props.likeCount}</span>
             </button>
         </article>
 
