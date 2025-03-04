@@ -1,4 +1,4 @@
-import { Post } from './components/Post.tsx'
+import { Post, PostType } from './components/Post.tsx'
 import { Header } from './components/Header.tsx'
 import { Sidebar } from './components/Sidebar.tsx'
 
@@ -6,7 +6,7 @@ import styles from './App.module.css'
 
 import './global.css'
 
-const postsFromApi = [
+const postsFromApi: PostType[] = [
   {
     id: 1,
     autor: {
@@ -68,10 +68,7 @@ function App() {
             return (
               <Post
                 key={post.id}
-                autor={post.autor}
-                postadoEm={post.postadoEm}
-                conteudo={post.conteudo}
-                comentarios={post.comentarios}
+                post={post}
               />
             )
           })}

@@ -19,7 +19,8 @@ interface Comentario {
 }
 
 // Declarando o tipo das Props do post
-interface PostProps {
+export interface PostType {
+    id: number,
     autor: {
         nome: string,
         cargo: string,
@@ -30,27 +31,40 @@ interface PostProps {
     comentarios: Comentario[]
 }
 
-export function Post(props: PostProps) {
+// Colocando as informações em post, para não precisar enviar um monte de informação na hora de chamar o componente
+interface PostProps {
+    post: PostType
+}
+
+export function Post({ post }: PostProps) {
     // STATE Fica a nivel de escopo do componente, ou seja, adiciona o comentario somente no "Post" atual
-    const [comentarios, setComentarios] = useState(props.comentarios || [])
+    const [comentarios, setComentarios] = useState(post.comentarios || [])
     const [conteudoComentario, setConteudoComentario] = useState('')
 
     // Usando biblioteca date-fns
-    const formatarDataString = format(new Date(props.postadoEm), "d 'de' MMM 'de' yyy 'as' HH'h'", {
+    const formatarDataString = format(new Date(post.postadoEm), "d 'de' MMM 'de' yyy 'as' HH'h'", {
         locale: ptBR
     })
 
-    const calcularTempoDeEnvio = (data = props.postadoEm) => formatDistanceToNow(new Date(data), {
+    const calcularTempoDeEnvio = (data = post.postadoEm) => formatDistanceToNow(new Date(data), {
         locale: ptBR,
         addSuffix: true
     })
+
+    // Atenção, isso é uma forma paliativa de usar o sistema de comentarios sem a necessidade do banco de dados
+    function incrementarIdComentario() {
+        return Math.max(
+            ...comentarios.flatMap((comentario) => comentario.idComentario),
+            0
+        )
+    }
 
     function handleSubmitFormulario(event: FormEvent) {
         event.preventDefault()
         if (!conteudoComentario.trim()) return
 
         const novoComentario = {
-            idComentario: comentarios.length + 1,
+            idComentario: incrementarIdComentario() + 1,
             autor: {
                 nome: 'Pedro Elorriaga',
                 avatar: 'https://github.com/pedroElorriaga.png'
@@ -97,19 +111,19 @@ export function Post(props: PostProps) {
             <header>
                 <div className={styles.autor}>
                     <Avatar
-                        avatar={props.autor.avatar}
+                        avatar={post.autor.avatar}
                     />
                     <div className={styles.autorInfo}>
-                        <strong>{props.autor.nome}</strong>
-                        <span>{props.autor.cargo}</span>
+                        <strong>{post.autor.nome}</strong>
+                        <span>{post.autor.cargo}</span>
                     </div>
                 </div>
 
-                <time title={formatarDataString} dateTime={props.postadoEm.toISOString()}>{calcularTempoDeEnvio()}</time>
+                <time title={formatarDataString} dateTime={post.postadoEm.toISOString()}>{calcularTempoDeEnvio()}</time>
             </header>
 
             <div className={styles.conteudo}>
-                <p>{props.conteudo}</p>
+                <p>{post.conteudo}</p>
             </div>
 
             <form onSubmit={handleSubmitFormulario} className={styles.commentForm}>
