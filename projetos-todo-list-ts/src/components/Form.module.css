@@ -1,0 +1,44 @@
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -27px;
+    gap: 0.5rem;
+}
+
+.form input {
+    background-color: var(--gray-500);
+    border: solid 1px var(--gray-700);
+    height: 3.25rem;
+    border-radius: 8px;
+    padding: 0.75rem;
+    width: 39rem;
+    outline: none;
+}
+
+.form input:focus {
+    outline: solid 1px var(--purple);
+    border: none;
+    color: var(--gray-100);
+}
+
+.form .criarTarefaBtn[type='submit'] {
+    background-color: var(--blue-dark);
+    border: none;
+    color: var(--gray-100);
+    height: 3.25rem;
+    border-radius: 8px;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+}
+
+.form .criarTarefaBtn[type='submit']:hover {
+    background-color: var(--blue);
+}

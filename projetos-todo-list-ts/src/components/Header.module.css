@@ -1,0 +1,22 @@
+.header {
+    background-color: var(--gray-700);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .logoSvgs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .logoFoguetinho {
+    height: 1.75rem;
+    padding: 0 0.5rem;
+}
+
+.header .logo {
+    height: 1.5rem;
+}
