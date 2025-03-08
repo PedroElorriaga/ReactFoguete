@@ -5,13 +5,19 @@ import Task from './components/Task.tsx'
 import styles from './App.module.css'
 import './global.css'
 
+const tasks: string[] = [
+    'Lavar roupa', 'Cozinhar'
+]
+
 function App() {
     return (
         <>
             <Header />
             <div className={styles.wrapper}>
                 <Form />
-                <Task />
+                <Task
+                    tasks={tasks}
+                />
             </div>
         </>
     )
