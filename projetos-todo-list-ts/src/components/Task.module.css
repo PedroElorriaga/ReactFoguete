@@ -7,6 +7,7 @@ article {
     justify-content: space-between;
     align-items: center;
     font-size: 0.875rem;
+    margin-bottom: 1.5rem;
 }
 
 .tasksHeader .tasksActive {
@@ -62,7 +63,7 @@ article {
     background-color: var(--gray-500);
     height: 4.5rem;
     color: var(--gray-200);
-    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
     padding: 1.5rem;
     border-radius: 8px;
 }

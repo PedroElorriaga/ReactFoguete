@@ -14,7 +14,7 @@ export default function Task({ tasks }: TaskType) {
             <header className={styles.tasksHeader}>
                 <div className={styles.tasksActive}>
                     Tarefas criadas
-                    <span>0</span>
+                    <span>{tasks.length}</span>
                 </div>
                 <div className={styles.tasksDone}>
                     Concluídas

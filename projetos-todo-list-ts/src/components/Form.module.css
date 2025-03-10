@@ -14,6 +14,7 @@
     padding: 0.75rem;
     width: 39rem;
     outline: none;
+    color: var(--gray-100);
 }
 
 .form input:focus {
