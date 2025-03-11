@@ -3,18 +3,28 @@ import styles from './Form.module.css'
 import plus from '../assets/plus.svg'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
-interface FormType {
-    onSetTaskOnState: (newTask: string) => void
+
+interface TaskType {
+    id: number,
+    task: string
 }
 
-export default function Form({ onSetTaskOnState }: FormType) {
+interface FormProps {
+    tasks: TaskType[]
+    onSetTaskOnState: (newTask: TaskType) => void
+}
+
+export default function Form({ onSetTaskOnState, tasks }: FormProps) {
     const [taskInput, setTaskInput] = useState('')
 
     function handleSubmitTask(event: FormEvent) {
         event.preventDefault()
         if (!taskInput.trim()) return
 
-        const newTask = taskInput.trim()
+        const newTask = {
+            id: Math.max(...tasks.flatMap((task) => task.id), 0) + 1,
+            task: taskInput
+        }
 
         onSetTaskOnState(newTask)
         setTaskInput('')
