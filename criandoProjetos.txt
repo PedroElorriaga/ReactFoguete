@@ -5,3 +5,14 @@ npm create vite@latest
 ## Entramos na pasta do projeto criado e ja de cara instalamos as dependencias
 
 npm i
+
+
+## No Projeto pomodoro, utilizamos o Eslint
+
+npm i eslint -D 
+
+e vamo utilizar a configuração do Rockeatseat no Eslint
+
+npm i @rocketseat/eslint-config -D
+
+colamos agora no extends "@rocketseat/eslint-config/react" em eslint.config.js
