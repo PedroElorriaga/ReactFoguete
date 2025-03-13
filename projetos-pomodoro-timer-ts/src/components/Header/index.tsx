@@ -1,19 +1,19 @@
 import pomodoroLogo from '../../assets/pomodoro-logo.svg';
 import { CgTime, CgLoadbarDoc } from "react-icons/cg";
+import { NavLink } from 'react-router-dom';
 
-import { HeaderStyle } from './styles';
+import { HeaderContanier } from './styles';
 
 export default function Header() {
     return (
         <>
-            <header>
+            <HeaderContanier>
                 <img src={pomodoroLogo} />
-                <div>
-                    <a href="/" className='homeIcon'><CgTime size={25} /></a>
-                    <a href="/historic"><CgLoadbarDoc size={25} /></a>
-                </div>
-            </header>
-            <HeaderStyle />
+                <nav>
+                    <NavLink to="/" title='Timer'><CgTime size={25} /></NavLink>
+                    <NavLink to="/historic" title='Histórico'><CgLoadbarDoc size={25} /></NavLink>
+                </nav>
+            </HeaderContanier>
         </>
 
     )

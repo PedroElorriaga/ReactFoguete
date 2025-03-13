@@ -11,4 +11,6 @@ export const LayoutContanier = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     flex-direction: column;
+    align-items: center;
+    
 `

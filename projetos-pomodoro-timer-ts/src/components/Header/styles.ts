@@ -1,37 +1,43 @@
-import { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
-export const HeaderStyle = createGlobalStyle`
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: 0 2rem;
-        margin-top: 2.5rem;
-    }
+export const HeaderContanier = styled.header`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 2rem;
+    margin-top: 2.5rem;
 
-    header div {
+    nav {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
     }
     
-    header div a {
-        color: ${props => props.theme["gray-300"]};
+    nav a {
+        color: ${props => props.theme["gray-100"]};
         width: 3rem;
         height: 3rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        cursor: initial;
-    }
 
-    header div svg {
-        cursor: pointer;
-    }
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        transition: border 0.2s;
 
-    header div .homeIcon {
-        color: ${props => props.theme["green-500"]};
+        &:hover {
+            border-bottom: 2px solid ${props => props.theme["green-500"]};
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 0 transparent;
+        }
+
+        &.active {
+            color: ${props => props.theme["green-500"]};
+        }
     }
 `
