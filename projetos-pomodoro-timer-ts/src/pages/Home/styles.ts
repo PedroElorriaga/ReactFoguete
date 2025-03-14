@@ -9,7 +9,11 @@ export const MainContanier = styled.main`
     width: 41rem;
 
     header {
-        font-weight: 500;
+        font-weight: bold;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
     }
 
     header input {
@@ -22,21 +26,27 @@ export const MainContanier = styled.main`
         margin: 0 0.5rem;
 
         &[type="text"] {
-            width: 239px;
+            flex: 1;
         }
 
-        &[type="text"]::placeholder {
+        &::placeholder {
             color: ${props => props.theme["gray-500"]};
+            font-weight: bold;
         }
 
-        &[type="text"]:focus {
+        &:focus {
             outline: 0;
             box-shadow: 0 0 0 0 transparent;
             color: ${props => props.theme["gray-100"]};
+            border-color: ${props => props.theme["green-500"]};
         }
 
-        &[type="time"] {
-            width: 60px;
+        &[type="number"] {
+            width: 4rem;
+        }
+
+        &::-webkit-calendar-picker-indicator {
+            display: none !important;
         }
     }
 
@@ -73,9 +83,25 @@ export const MainContanier = styled.main`
         width: 40.5rem;
         height: 4rem;
         background-color: ${props => props.theme["green-700"]};
-        color: ${props => props.theme["gray-300"]};
+        color: ${props => props.theme["gray-100"]};
+        font-weight: bold;
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+
+        transition: background-color 0.2s;
+
+        &:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        &:not(:disabled):hover {
+            background-color: ${props => props.theme["green-500"]};
+        }
     }
 `

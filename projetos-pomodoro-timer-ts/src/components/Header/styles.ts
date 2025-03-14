@@ -34,6 +34,7 @@ export const HeaderContanier = styled.header`
         &:focus {
             outline: 0;
             box-shadow: 0 0 0 0 transparent;
+            border-bottom-color: ${props => props.theme["green-500"]};
         }
 
         &.active {
