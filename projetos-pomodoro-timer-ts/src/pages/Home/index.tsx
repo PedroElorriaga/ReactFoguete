@@ -10,7 +10,7 @@ import { differenceInSeconds } from 'date-fns';
 
 const onSubmitFormValidationSchema = zod.object({
     task: zod.string().min(1, 'Favor informe a tarefa'),
-    timer: zod.number().min(5).max(60).step(5)
+    timer: zod.number().min(5).max(60)
 })
 
 type SubmitFormData = zod.infer<typeof onSubmitFormValidationSchema>
@@ -20,7 +20,8 @@ interface Cycle {
     task: string,
     timer: number,
     startDate: Date,
-    stopedDate?: Date
+    stopedDate?: Date,
+    finishedDate?: Date
 }
 
 export default function Home() {
@@ -54,9 +55,28 @@ export default function Home() {
 
         if (activeCycle) {
             interval = setInterval(() => {
-                setSecondsTake(
-                    differenceInSeconds(new Date(), activeCycle.startDate)
+                const seccondsDiference = differenceInSeconds(
+                    new Date(),
+                    activeCycle.startDate
                 )
+
+                if (seccondsDiference >= totalSeconds) {
+                    setCycle(state =>
+                        state.map(data => {
+                            if (data.id === activeCycleId) {
+                                return { ...data, finishedDate: new Date() }
+                            } else {
+                                return data
+                            }
+                        })
+                    )
+
+                    setSecondsTake(totalSeconds)
+                    clearInterval(interval)
+                } else {
+                    setSecondsTake(seccondsDiference)
+                }
+
             }, 1000);
         }
 
@@ -64,7 +84,7 @@ export default function Home() {
             clearInterval(interval)
         } // Funcao que deleta os intervalos anteriores
 
-    }, [activeCycle])
+    }, [activeCycle, totalSeconds, activeCycleId])
 
     useEffect(() => {
         if (activeCycle) document.title = `${minutesString}:${secondsString}`
@@ -89,8 +109,8 @@ export default function Home() {
     }
 
     const handleReset = () => {
-        setCycle(
-            cycle.map((data) => {
+        setCycle(state =>
+            state.map((data) => {
                 if (data.id === activeCycleId) {
                     return { ...data, stopedDate: new Date() }
                 } else {
