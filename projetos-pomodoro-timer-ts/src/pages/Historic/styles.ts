@@ -75,3 +75,27 @@ export const MainContanier = styled.main`
         background-color: ${props => props.theme["gray-700"]};
     }
 `
+
+const StatusColors = {
+    yellow: 'yellow-500',
+    red: 'red-500',
+    green: 'green-500'
+} as const //Para especificar ao TS que somente esses valores podem ser utilizados
+
+interface StatusProps {
+    statusColor: keyof typeof StatusColors
+}
+
+export const Status = styled.span<StatusProps>`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+        content: '';
+        border-radius: 50%;
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: ${props => props.theme[StatusColors[props.statusColor]]};
+    }
+`

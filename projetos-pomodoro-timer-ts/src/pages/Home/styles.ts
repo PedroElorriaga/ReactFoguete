@@ -103,5 +103,23 @@ export const MainContanier = styled.main`
         &:not(:disabled):hover {
             background-color: ${props => props.theme["green-500"]};
         }
+
+        &:focus {
+            outline: 0;
+            box-shadow: transparent;
+        }
+
+        &[type="reset"] {
+            background-color: ${props => props.theme["red-700"]};
+
+            &:hover {
+                background-color: ${props => props.theme["red-500"]};
+            }
+
+            &:focus {
+                outline: 0;
+                box-shadow: transparent;
+            }
+        }
     }
 `

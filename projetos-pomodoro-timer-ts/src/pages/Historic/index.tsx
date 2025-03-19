@@ -1,4 +1,4 @@
-import { MainContanier } from "./styles";
+import { MainContanier, Status } from "./styles";
 
 export default function History() {
 
@@ -22,79 +22,81 @@ export default function History() {
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                         <tr>
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                         <tr>
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                         <tr>
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                         <tr>
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                         <tr>
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                         <tr>
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                         <tr>
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                         <tr>
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                         <tr>
                             <td>Estudar React</td>
                             <td>20 minutos</td>
                             <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>Concluido</td>
+                            <td>
+                                <Status statusColor='green'>Concluido</Status>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
