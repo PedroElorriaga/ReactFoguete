@@ -1,12 +1,15 @@
+import TaskForm from './components/TaskForm';
+import Countdown from './components/Countdown';
+
 import { MainContanier } from './styles';
 import { Play, Hand } from "@phosphor-icons/react";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as zod from 'zod'
-import { useState, useEffect } from 'react';
+import { useState, createContext } from 'react';
 
-import { differenceInSeconds } from 'date-fns';
+import * as zod from 'zod'
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod';
+
 
 const onSubmitFormValidationSchema = zod.object({
     task: zod.string().min(1, 'Favor informe a tarefa'),
@@ -24,8 +27,22 @@ interface Cycle {
     finishedDate?: Date
 }
 
+interface CyclesContextType {
+    activeCycle: Cycle | undefined,
+    activeCycleId: string | null,
+    secondsTake: number,
+    finishedCycle: () => void,
+    updatingSecondsPassed: (seconds: number) => void
+}
+
+export const CyclesContext = createContext({} as CyclesContextType)
+
 export default function Home() {
-    const { register, handleSubmit, watch, reset } = useForm({
+    const [cycle, setCycle] = useState<Cycle[]>([])
+    const [activeCycleId, setActiveCycleId] = useState<string | null>('')
+    const [secondsTake, setSecondsTake] = useState(0)
+
+    const newCycleForm = useForm({
         resolver: zodResolver(onSubmitFormValidationSchema),
         defaultValues: {
             task: '',
@@ -33,9 +50,7 @@ export default function Home() {
         }
     });
 
-    const [cycle, setCycle] = useState<Cycle[]>([])
-    const [activeCycleId, setActiveCycleId] = useState<string | null>()
-    const [secondsTake, setSecondsTake] = useState(0)
+    const { handleSubmit, watch, reset } = newCycleForm
 
     const task = watch('task')
     const timer = watch('timer')
@@ -43,57 +58,21 @@ export default function Home() {
 
     const activeCycle = cycle.find(data => data.id === activeCycleId)
 
-    const totalSeconds = activeCycle ? activeCycle.timer * 60 : 0   // timer * 60 para pegar os segundos dos minutos
-    const currentSeconds = activeCycle ? totalSeconds - secondsTake : 0
-    const minutesAmount = Math.floor(currentSeconds / 60)
-    const secondsAmount = currentSeconds % 60  // Qual numero sobra quando divido os segundos por 60
-    const minutesString = String(minutesAmount).padStart(2, '0')
-    const secondsString = String(secondsAmount).padStart(2, '0')
-
-    useEffect(() => {
-        let interval: number
-
-        if (activeCycle) {
-            interval = setInterval(() => {
-                const seccondsDiference = differenceInSeconds(
-                    new Date(),
-                    activeCycle.startDate
-                )
-
-                if (seccondsDiference >= totalSeconds) {
-                    setCycle(state =>
-                        state.map(data => {
-                            if (data.id === activeCycleId) {
-                                return { ...data, finishedDate: new Date() }
-                            } else {
-                                return data
-                            }
-                        })
-                    )
-
-                    setSecondsTake(totalSeconds)
-                    clearInterval(interval)
+    const finishedCycle = () => {
+        setCycle(state =>
+            state.map(data => {
+                if (data.id === activeCycleId) {
+                    return { ...data, finishedDate: new Date() }
                 } else {
-                    setSecondsTake(seccondsDiference)
+                    return data
                 }
+            })
+        )
+    }
 
-            }, 1000);
-        }
-
-        return () => {
-            clearInterval(interval)
-        } // Funcao que deleta os intervalos anteriores
-
-    }, [activeCycle, totalSeconds, activeCycleId])
-
-    useEffect(() => {
-        if (activeCycle) document.title = `${minutesString}:${secondsString}`
-
-        return () => {
-            document.title = 'Vite + React + TS'
-        }
-    }, [minutesString, secondsString, activeCycle]) // Ativa contagem no titulo
-
+    const updatingSecondsPassed = (seconds: number) => {
+        setSecondsTake(seconds)
+    }
 
     const onSubmit = (data: SubmitFormData) => {
         const newCycle: Cycle = {
@@ -126,38 +105,20 @@ export default function Home() {
     return (
         <MainContanier>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <header>
-                    <label htmlFor="text">Vou trabalhar em </label>
-                    <input
-                        type="text"
-                        list="text-suggestion"
-                        id="text"
-                        placeholder='Dê um nome para o seu projeto'
-                        {...register('task')}
-                        disabled={activeCycle != null}
-                    />
-                    <datalist id="text-suggestion">
-                        <option>Estudar react</option>
-                        <option>Estudar Js</option>
-                        <option>Estudar Python</option>
-                    </datalist>
-                    <label htmlFor="number">durante</label>
-                    <input
-                        type="number"
-                        id="number"
-                        placeholder='00'
-                        {...register('timer', { valueAsNumber: true })}
-                        disabled={activeCycle != null}
-                    />
-                    <span>minutos.</span>
-                </header>
-                <article>
-                    <div>{minutesString[0]}</div>
-                    <div>{minutesString[1]}</div>
-                    <span>:</span>
-                    <div>{secondsString[0]}</div>
-                    <div>{secondsString[1]}</div>
-                </article>
+                <CyclesContext.Provider value={
+                    {
+                        activeCycle,
+                        activeCycleId,
+                        finishedCycle,
+                        secondsTake,
+                        updatingSecondsPassed
+                    }
+                }>
+                    <FormProvider {...newCycleForm}>
+                        <TaskForm />
+                    </FormProvider>
+                    <Countdown />
+                </CyclesContext.Provider>
                 {!activeCycle ? (
                     <button type='submit' disabled={isSubmitDisabled}><Play size={30} />Começar</button>
                 ) : (
