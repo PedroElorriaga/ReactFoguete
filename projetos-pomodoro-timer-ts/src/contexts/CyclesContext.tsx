@@ -1,5 +1,5 @@
-import { createContext, useState, ReactNode } from "react"
-
+import { createContext, useState, ReactNode, useReducer, useEffect } from "react"
+import { differenceInSeconds } from 'date-fns'
 
 interface CreateCycleData {
     task: string,
@@ -32,25 +32,90 @@ interface CycleProviderChildrenProps {
     children: ReactNode
 }
 
+interface CycleState {
+    cycle: Cycle[],
+    activeCycleId: string | null
+}
+
 export function CyclesContextProvider({ children }: CycleProviderChildrenProps) {
-    const [cycle, setCycle] = useState<Cycle[]>([])
-    const [activeCycleId, setActiveCycleId] = useState<string | null>('')
-    const [secondsTake, setSecondsTake] = useState(0)
-
-    const activeCycle = cycle.find(data => data.id === activeCycleId)
-
-    const finishedCycle = () => {
-        setCycle(state =>
-            state.map(data => {
-                if (data.id === activeCycleId) {
-                    return { ...data, finishedDate: new Date() }
-                } else {
-                    return data
+    const [cycles, dispacth] = useReducer((state: CycleState, action: any) => {
+        switch (action.type) {
+            case 'createNewCycle':
+                return {
+                    ...state,
+                    cycle: [...state.cycle, action.payload.newCycle],
+                    activeCycleId: action.payload.newCycle.id
                 }
-            })
+
+            case 'resetCycle':
+                return {
+                    ...state,
+                    cycle: state.cycle.map((data) => {
+                        if (data.id === state.activeCycleId) {
+                            return { ...data, stopedDate: new Date() }
+                        } else {
+                            return data
+                        }
+                    }),
+                    activeCycleId: null
+                }
+
+            case 'finishedCycle':
+                return {
+                    ...state,
+                    cycle: state.cycle.map(data => {
+                        if (data.id === state.activeCycleId) {
+                            return { ...data, finishedDate: new Date() }
+                        } else {
+                            return data
+                        }
+                    }),
+                    activeCycleId: null
+                }
+
+            default:
+                return state
+        }
+
+    }, {
+        cycle: [],
+        activeCycleId: null
+    }, (initialState) => {
+        const storedStateAsJSON = localStorage.getItem(
+            'projeto-pomodoro:cycles'
         )
 
-        setActiveCycleId(null)
+        if (storedStateAsJSON) {
+            return JSON.parse(storedStateAsJSON)
+        }
+
+        return initialState
+    })
+
+    const { cycle, activeCycleId } = cycles
+    const activeCycle = cycle.find(data => data.id === activeCycleId)
+
+    const [secondsTake, setSecondsTake] = useState(() => {
+        if (activeCycle) {
+            return differenceInSeconds(new Date(), new Date(activeCycle.startDate))
+        }
+
+        return 0
+    })
+
+    useEffect(() => {
+        const stateJSON = JSON.stringify(cycles)
+
+        localStorage.setItem('projeto-pomodoro:cycles', stateJSON)
+    }, [cycles])
+
+    const finishedCycle = () => {
+        dispacth({
+            type: 'finishedCycle',
+            payload: {
+                activeCycleId
+            }
+        })
         setSecondsTake(0)
     }
 
@@ -66,22 +131,22 @@ export function CyclesContextProvider({ children }: CycleProviderChildrenProps) 
             startDate: new Date()
         }
 
-        setActiveCycleId(newCycle.id)
-        setCycle((state) => [...state, newCycle]) // Closure do react por isso usei (state)
+        dispacth({
+            type: 'createNewCycle',
+            payload: {
+                newCycle
+            }
+        })
         setSecondsTake(0)
     }
 
     const resetCycle = () => {
-        setCycle(state =>
-            state.map((data) => {
-                if (data.id === activeCycleId) {
-                    return { ...data, stopedDate: new Date() }
-                } else {
-                    return data
-                }
-            })
-        )
-        setActiveCycleId(null)
+        dispacth({
+            type: 'resetCycle',
+            payload: {
+                activeCycleId
+            }
+        })
         setSecondsTake(0)
     }
 
