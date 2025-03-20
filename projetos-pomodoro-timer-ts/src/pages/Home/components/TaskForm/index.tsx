@@ -1,5 +1,5 @@
 import { FormContanier } from "./styles"
-import { CyclesContext } from "../../index"
+import { CyclesContext } from "../../../../contexts/CyclesContext"
 
 import { useContext } from "react";
 import { useFormContext } from "react-hook-form";

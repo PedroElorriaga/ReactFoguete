@@ -12,13 +12,16 @@ import { defaultTheme } from './styles/theme/default.ts';
 import { GlobalStyle } from './styles/global.ts';
 
 import Router from './Router.tsx';
+import { CyclesContextProvider } from './contexts/CyclesContext.tsx';
 
 function App() {
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
-          <Router />
+          <CyclesContextProvider>
+            <Router />
+          </CyclesContextProvider>
         </BrowserRouter>
         <GlobalStyle />
       </ThemeProvider>

@@ -1,6 +1,19 @@
+import { useContext } from "react";
 import { MainContanier, Status } from "./styles";
 
+import { CyclesContext } from "../../contexts/CyclesContext"
+
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from 'date-fns/locale/pt-BR'
+
 export default function History() {
+    const { cycle } = useContext(CyclesContext)
+
+    const calcTimeDistance = (date: Date) => formatDistanceToNow(new Date(date),
+        {
+            locale: ptBR,
+            addSuffix: true
+        })
 
     return (
         <MainContanier>
@@ -18,86 +31,25 @@ export default function History() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Estudar React</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor='green'>Concluido</Status>
-                            </td>
-                        </tr>
+                        {cycle.map(data => {
+                            return (
+                                <tr key={data.id}>
+                                    <td>{data.task}</td>
+                                    <td>{data.timer}</td>
+                                    <td>{calcTimeDistance(data.startDate)}</td>
+                                    <td>
+                                        {data.stopedDate ? (
+                                            <Status statusColor='red'>Interrompido</Status>
+                                        ) : data.finishedDate ? (
+                                            <Status statusColor='green'>Concluido</Status>
+                                        ) : (
+                                            <Status statusColor='yellow'>Em andamento</Status>
+                                        )}
+
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </article>

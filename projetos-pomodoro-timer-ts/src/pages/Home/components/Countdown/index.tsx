@@ -1,5 +1,5 @@
 import { CountdownContanier } from "./styles"
-import { CyclesContext } from "../../index"
+import { CyclesContext } from "../../../../contexts/CyclesContext"
 
 import { useEffect, useContext } from "react"
 import { differenceInSeconds } from "date-fns"
@@ -27,8 +27,6 @@ export default function Countdown() {
                 if (seccondsDiference >= totalSeconds) {
                     finishedCycle()
 
-                    document.title = `${minutesString}:${secondsString}` // Ativa contagem no titulo
-
                     updatingSecondsPassed(totalSeconds)
                     clearInterval(interval)
                 } else {
@@ -45,11 +43,17 @@ export default function Countdown() {
 
     }, [
         activeCycle,
-        totalSeconds,
         activeCycleId,
-        minutesString,
-        secondsString
+        totalSeconds
     ])
+
+    useEffect(() => {
+        if (activeCycle) document.title = `${minutesString}:${secondsString}` // Ativa contagem no titulo
+
+        return () => {
+            document.title = 'Vite + React + TS'
+        }
+    }, [minutesString, secondsString, activeCycle])
 
     return (
         <CountdownContanier>
