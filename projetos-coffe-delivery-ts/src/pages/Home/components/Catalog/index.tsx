@@ -29,7 +29,6 @@ const coffeStock: CoffeStockType[] = [
         coffeTags: ['TRADICIONAL'],
         coffeImage: '/coffe-americano.svg'
     },
-
     {
         id: 2,
         coffeTitle: 'Expresso Tradicional',
@@ -38,7 +37,6 @@ const coffeStock: CoffeStockType[] = [
         coffeTags: ['TRADICIONAL'],
         coffeImage: '/coffe-traditional.svg'
     },
-
     {
         id: 3,
         coffeTitle: 'Expresso Cremoso',
@@ -47,7 +45,6 @@ const coffeStock: CoffeStockType[] = [
         coffeTags: ['TRADICIONAL'],
         coffeImage: '/coffe-express.svg'
     },
-
     {
         id: 4,
         coffeTitle: 'Expresso Gelado',
@@ -56,7 +53,6 @@ const coffeStock: CoffeStockType[] = [
         coffeTags: ['TRADICIONAL', 'GELADO'],
         coffeImage: '/coffe-gelado.svg'
     },
-
     {
         id: 5,
         coffeTitle: 'Café com Leite',
@@ -65,7 +61,6 @@ const coffeStock: CoffeStockType[] = [
         coffeTags: ['TRADICIONAL', 'COM LEITE'],
         coffeImage: '/coffe-milk.svg'
     },
-
     {
         id: 6,
         coffeTitle: 'Latte',
@@ -73,6 +68,38 @@ const coffeStock: CoffeStockType[] = [
         coffePrice: '9,90',
         coffeTags: ['TRADICIONAL', 'COM LEITE'],
         coffeImage: '/coffe-latte.svg'
+    },
+    {
+        id: 7,
+        coffeTitle: 'Capuccino',
+        coffeDescription: 'Bebida com canela feita de doses iguais de café, leite e espuma',
+        coffePrice: '9,90',
+        coffeTags: ['TRADICIONAL', 'COM LEITE'],
+        coffeImage: '/coffe-capuccino.svg'
+    },
+    {
+        id: 8,
+        coffeTitle: 'Mocaccino',
+        coffeDescription: 'Café expresso com calda de chocolate, pouco leite e espuma',
+        coffePrice: '9,90',
+        coffeTags: ['TRADICIONAL', 'COM LEITE'],
+        coffeImage: '/coffe-mocaccino.svg'
+    },
+    {
+        id: 9,
+        coffeTitle: 'Cubano',
+        coffeDescription: 'Drink gelado de café expresso com rum, creme de leite e hortelã',
+        coffePrice: '9,90',
+        coffeTags: ['ESPECIAL', 'ALCOÓLICO', 'GELADO'],
+        coffeImage: '/coffe-cuban.svg'
+    },
+    {
+        id: 10,
+        coffeTitle: 'Irlandês',
+        coffeDescription: 'Bebida a base de café, uísque irlandês, açúcar e chantilly',
+        coffePrice: '9,90',
+        coffeTags: ['ESPECIAL', 'ALCOÓLICO'],
+        coffeImage: '/coffe-irland.svg'
     }
 ]
 

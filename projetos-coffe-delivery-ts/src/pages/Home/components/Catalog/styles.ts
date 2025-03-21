@@ -104,6 +104,8 @@ export const CoffePricingCartContent = styled.div`
         gap: 0.5rem;
 
         button {
+            display: flex;
+            align-items: center;
             background: none;
             border: none;
             color: ${props => props.theme["purple-dark"]};
