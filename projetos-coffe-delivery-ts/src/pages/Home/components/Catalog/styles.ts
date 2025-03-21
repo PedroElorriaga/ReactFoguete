@@ -13,11 +13,14 @@ export const CatalogContanier = styled.main`
 
 export const CatalogContent = styled.div`
     display: flex;
+    flex-wrap: wrap;
     margin-top: 3rem;
+    gap: 2rem;
 
 `
 
 export const CoffeCard = styled.div`
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     background-color: ${props => props.theme["base-card"]};
@@ -35,13 +38,19 @@ export const CoffeCard = styled.div`
 `
 
 export const CoffeTag = styled.div`
-    background-color: ${props => props.theme["yellow-light"]};
-    color: ${props => props.theme["yellow-dark"]};
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 15px;
-    font-weight: bold;
-    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.25rem;
+
+    span {
+        background-color: ${props => props.theme["yellow-light"]};
+        color: ${props => props.theme["yellow-dark"]};
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 15px;
+        font-weight: bold;
+        margin-top: 0.75rem;
+    }
+    
 `
 
 export const CoffeContent = styled.div`
@@ -84,16 +93,25 @@ export const CoffePricingCartContent = styled.div`
     align-items: center;
     gap: 0.5rem;
 
-    input {
-        width: 4.5rem;
-        height: 2.25rem;
+    .counterWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: ${props => props.theme["base-button"]};
-        border: none;
-        text-align: center;
+        width: 4.25rem;
+        height: 2.25rem;
         border-radius: 8px;
+        gap: 0.5rem;
+
+        button {
+            background: none;
+            border: none;
+            color: ${props => props.theme["purple-dark"]};
+            cursor: pointer;
+        }
     }
 
-    button {
+    .addToCart {
         border: none;
         background-color: ${props => props.theme["purple-dark"]};
         color: ${props => props.theme["white"]};
