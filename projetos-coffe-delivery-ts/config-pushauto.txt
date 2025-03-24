@@ -1,0 +1,13 @@
+1 - Crie o push.ps1 e copie as informações que esta no ps1 desse repo
+
+2 - Set-Alias gpush push.ps1, direto no cmd do vs code
+
+3 - echo $PROFILE, Ele vai mostrar algo como: C:\Users\SeuUsuario\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+
+4 - code $PROFILE no vs code (Se o arquivo não existir, o VS Code vai criar um arquivo novo.)
+
+5 - Set-Alias gpush "C:\caminho\completo\para\push.ps1"
+
+6 - Feche e abra o terminal do VS Code
+
+7 - gpush "sua mensagem de commit"
