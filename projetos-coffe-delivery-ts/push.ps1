@@ -9,4 +9,4 @@ if (-not $mensagem) {
 
 git add .
 git commit -m "$mensagem"
-git push origin main
+git push github main
