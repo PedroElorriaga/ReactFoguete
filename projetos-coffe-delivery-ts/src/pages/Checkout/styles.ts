@@ -166,6 +166,7 @@ export const CoffeOrderDetailContent = styled.div`
     display: flex;
     gap: 1.5rem;
     border-bottom: 1px solid ${props => props.theme["base-button"]};
+    margin-top: 1.5rem;
 
     img {
         height: 4rem;
@@ -176,7 +177,7 @@ export const CoffeOrderDetailContent = styled.div`
     h5 {
         color: ${props => props.theme["base-text"]};
         margin-left: 2rem;
-        font-size: 1rem;
+        font-size: 1.25rem;
         display: flex;
         gap: 0.25rem;
         font-weight: 600;
@@ -249,4 +250,36 @@ export const CoffeQuantityContent = styled.div`
 
 export const OrderTotalPricingContent = styled.div`
     display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+    gap: 1rem;
+
+    div {
+        display: flex;
+        justify-content: space-between;
+        color: ${props => props.theme["base-text"]};
+    }
+
+    .totalOrder {
+        color: ${props => props.theme["base-subtitle"]};
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+    
+    button {
+        margin-top: 1rem;
+        height: 2.875rem;
+        border: none;
+        background-color: ${props => props.theme.yellow};
+        color: ${props => props.theme.white};
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 8px;
+
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: ${props => props.theme["yellow-dark"]};
+        }
+    }
 `

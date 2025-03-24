@@ -9,7 +9,8 @@ import {
     OrderDetailContent,
     OrderPricingDetailContent,
     CoffeOrderDetailContent,
-    CoffeQuantityContent
+    CoffeQuantityContent,
+    OrderTotalPricingContent
 } from './styles';
 import {
     MapPinLine,
@@ -71,6 +72,27 @@ export default function Checkout() {
                             </CoffeQuantityContent>
                             <h5>R$<span>9,90</span></h5>
                         </CoffeOrderDetailContent>
+                        <CoffeOrderDetailContent>
+                            <img src="/coffe-cuban.svg" />
+                            <CoffeQuantityContent>
+                                <h4>Cubano</h4>
+                                <div className="itensButons">
+                                    <div className="counterWrapper">
+                                        <button><Minus size={15} /></button>
+                                        <p>1</p>
+                                        <button><Plus size={15} /></button>
+                                    </div>
+                                    <button className="removeItem"><span><Trash size={15} /></span>REMOVER</button>
+                                </div>
+                            </CoffeQuantityContent>
+                            <h5>R$<span>9,90</span></h5>
+                        </CoffeOrderDetailContent>
+                        <OrderTotalPricingContent>
+                            <div>Total de itens<span>R$ 9,90</span></div>
+                            <div>Entrega<span>R$ 5,00</span></div>
+                            <div className="totalOrder">Total<span>R$ 14,90</span></div>
+                            <button>CONFIRMAR PEDIDO</button>
+                        </OrderTotalPricingContent>
                     </OrderPricingDetailContent>
                 </OrderDetailContent>
             </CheckoutContanier>
