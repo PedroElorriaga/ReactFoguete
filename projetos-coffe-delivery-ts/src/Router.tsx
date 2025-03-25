@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Checkout from './pages/Checkout';
+import Success from './pages/Success';
 
 export default function Router() {
 
@@ -8,6 +9,7 @@ export default function Router() {
         <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/checkout' element={<Checkout />} />
+            <Route path='/checkout/success' element={<Success />} />
         </Routes>
     )
 }
