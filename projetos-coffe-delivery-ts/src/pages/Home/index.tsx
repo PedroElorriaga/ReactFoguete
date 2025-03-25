@@ -26,25 +26,25 @@ export default function Home() {
                     </BrandContent>
                     <BenefitsContent>
                         <p>
-                            <BenefitsCircles benefitsCirclesColors='darkYellow'>
+                            <BenefitsCircles benefitscirclescolors='darkYellow'>
                                 <ShoppingCart weight="fill" size={18} />
                             </BenefitsCircles>
                             Compra simples e segura
                         </p>
                         <p>
-                            <BenefitsCircles benefitsCirclesColors='gray'>
+                            <BenefitsCircles benefitscirclescolors='gray'>
                                 <Package weight="fill" size={18} />
                             </BenefitsCircles>
                             Embalagem mantém o café intacto
                         </p>
                         <p>
-                            <BenefitsCircles benefitsCirclesColors='yellow'>
+                            <BenefitsCircles benefitscirclescolors='yellow'>
                                 <Timer weight="fill" size={18} />
                             </BenefitsCircles>
                             Entrega rápida e rastreada
                         </p>
                         <p>
-                            <BenefitsCircles benefitsCirclesColors='purple'>
+                            <BenefitsCircles benefitscirclescolors='purple'>
                                 <Coffee weight="fill" size={18} />
                             </BenefitsCircles>
                             O café chega fresquinho até você

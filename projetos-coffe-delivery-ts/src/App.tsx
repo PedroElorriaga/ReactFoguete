@@ -3,13 +3,17 @@ import { defaultTheme } from './styles/theme/default';
 import { BrowserRouter } from 'react-router-dom';
 import Router from './Router.tsx';
 import { GlobalStyle } from './styles/global.ts';
+import { ItensContextProvider } from './context/ItensContext.tsx';
+
 
 function App() {
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
-          <Router />
+          <ItensContextProvider>
+            <Router />
+          </ItensContextProvider>
         </BrowserRouter>
         <GlobalStyle />
       </ThemeProvider>

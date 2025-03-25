@@ -77,9 +77,9 @@ const BenefitsCirclesColors = {
 } as const
 
 interface BenefitsCirclesColorsProps {
-    benefitsCirclesColors: keyof typeof BenefitsCirclesColors
+    benefitscirclescolors: keyof typeof BenefitsCirclesColors
 }
 
 export const BenefitsCircles = styled.span<BenefitsCirclesColorsProps>`
-    background-color: ${props => props.theme[BenefitsCirclesColors[props.benefitsCirclesColors]]};
+    background-color: ${props => props.theme[BenefitsCirclesColors[props.benefitscirclescolors]]};
 `

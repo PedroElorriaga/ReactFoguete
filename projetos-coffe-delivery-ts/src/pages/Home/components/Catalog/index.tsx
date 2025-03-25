@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
     CatalogContanier,
     CatalogContent,
@@ -9,23 +9,15 @@ import {
     CoffePricingCartContent
 } from "./styles"
 import { ShoppingCart, Minus, Plus } from "@phosphor-icons/react";
+import { ItemCartState, CoffeStockType, ItensContext } from "../../../../context/ItensContext";
 
-
-interface CoffeStockType {
-    id: number,
-    coffeTitle: string,
-    coffeDescription: string,
-    coffePrice: string,
-    coffeTags: string[],
-    coffeImage: string
-}
 
 const coffeStock: CoffeStockType[] = [
     {
         id: 1,
         coffeTitle: 'Expresso Americano',
         coffeDescription: 'Expresso diluído, menos intenso que o tradicional',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['TRADICIONAL'],
         coffeImage: '/coffe-americano.svg'
     },
@@ -33,7 +25,7 @@ const coffeStock: CoffeStockType[] = [
         id: 2,
         coffeTitle: 'Expresso Tradicional',
         coffeDescription: 'O tradicional café feito com água quente e grãos moídos',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['TRADICIONAL'],
         coffeImage: '/coffe-traditional.svg'
     },
@@ -41,7 +33,7 @@ const coffeStock: CoffeStockType[] = [
         id: 3,
         coffeTitle: 'Expresso Cremoso',
         coffeDescription: 'Café expresso tradicional com espuma cremosa',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['TRADICIONAL'],
         coffeImage: '/coffe-express.svg'
     },
@@ -49,7 +41,7 @@ const coffeStock: CoffeStockType[] = [
         id: 4,
         coffeTitle: 'Expresso Gelado',
         coffeDescription: 'Bebida preparada com café expresso e cubos de gelo',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['TRADICIONAL', 'GELADO'],
         coffeImage: '/coffe-gelado.svg'
     },
@@ -57,7 +49,7 @@ const coffeStock: CoffeStockType[] = [
         id: 5,
         coffeTitle: 'Café com Leite',
         coffeDescription: 'Meio a meio de expresso tradicional com leite vaporizado',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['TRADICIONAL', 'COM LEITE'],
         coffeImage: '/coffe-milk.svg'
     },
@@ -65,7 +57,7 @@ const coffeStock: CoffeStockType[] = [
         id: 6,
         coffeTitle: 'Latte',
         coffeDescription: 'Uma dose de café expresso com o dobro de leite e espuma cremosa',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['TRADICIONAL', 'COM LEITE'],
         coffeImage: '/coffe-latte.svg'
     },
@@ -73,7 +65,7 @@ const coffeStock: CoffeStockType[] = [
         id: 7,
         coffeTitle: 'Capuccino',
         coffeDescription: 'Bebida com canela feita de doses iguais de café, leite e espuma',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['TRADICIONAL', 'COM LEITE'],
         coffeImage: '/coffe-capuccino.svg'
     },
@@ -81,7 +73,7 @@ const coffeStock: CoffeStockType[] = [
         id: 8,
         coffeTitle: 'Mocaccino',
         coffeDescription: 'Café expresso com calda de chocolate, pouco leite e espuma',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['TRADICIONAL', 'COM LEITE'],
         coffeImage: '/coffe-mocaccino.svg'
     },
@@ -89,7 +81,7 @@ const coffeStock: CoffeStockType[] = [
         id: 9,
         coffeTitle: 'Cubano',
         coffeDescription: 'Drink gelado de café expresso com rum, creme de leite e hortelã',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['ESPECIAL', 'ALCOÓLICO', 'GELADO'],
         coffeImage: '/coffe-cuban.svg'
     },
@@ -97,16 +89,11 @@ const coffeStock: CoffeStockType[] = [
         id: 10,
         coffeTitle: 'Irlandês',
         coffeDescription: 'Bebida a base de café, uísque irlandês, açúcar e chantilly',
-        coffePrice: '9,90',
+        coffePrice: 9.90,
         coffeTags: ['ESPECIAL', 'ALCOÓLICO'],
         coffeImage: '/coffe-irland.svg'
     }
 ]
-
-interface ItemCartState {
-    coffes: CoffeStockType,
-    coffeQuantity: number
-}
 
 export default function Catalog() {
     const [qntdItemCart, setQntditemCart] = useState<ItemCartState[]>([])
@@ -145,6 +132,15 @@ export default function Catalog() {
         )
     }
 
+    const { addItemInTheCart } = useContext(ItensContext)
+
+    const handleAddItemInTheCart = (id: number) => {
+        const itemToAdd = qntdItemCart.find(item => {
+            if (item.coffes.id === id) return item
+        })
+        addItemInTheCart(itemToAdd!) // Aqui especifico que sempre vou encontrar um item
+    }
+
     return (
         <>
             <CatalogContanier>
@@ -166,7 +162,7 @@ export default function Catalog() {
                                     <p>{item.coffeDescription}</p>
                                 </CoffeContent>
                                 <CoffePricingContent>
-                                    <h4>R$<span>{item.coffePrice}</span></h4>
+                                    <h4>R$<span>{item.coffePrice.toFixed(2).replace('.', ',')}</span></h4>
                                     <CoffePricingCartContent>
                                         <div className="counterWrapper">
                                             <button onClick={() => handleMinusClickItem(item.id)}><Minus size={15} /></button>
@@ -177,7 +173,7 @@ export default function Catalog() {
                                             })}
                                             <button onClick={() => handlePlusClickItem(item.id)}><Plus size={15} /></button>
                                         </div>
-                                        <button className="addToCart"><ShoppingCart weight="fill" size={23} /></button>
+                                        <button className="addToCart" onClick={() => handleAddItemInTheCart(item.id)}><ShoppingCart weight="fill" size={23} /></button>
                                     </CoffePricingCartContent>
                                 </CoffePricingContent>
                             </CoffeCard>
