@@ -1,18 +1,10 @@
 import { createContext, useState, ReactNode, useReducer, useEffect } from "react"
 import { differenceInSeconds } from 'date-fns'
-
+import { Cycle, cyclesReducer } from "../reducers/cycles/reducers"
+import { addNewCycleAction, resetCycleAction, setFinishedCycleAction } from "../reducers/cycles/actions"
 interface CreateCycleData {
     task: string,
     timer: number
-}
-
-interface Cycle {
-    id: string,
-    task: string,
-    timer: number,
-    startDate: Date,
-    stopedDate?: Date,
-    finishedDate?: Date
 }
 
 interface CyclesContextType {
@@ -32,52 +24,8 @@ interface CycleProviderChildrenProps {
     children: ReactNode
 }
 
-interface CycleState {
-    cycle: Cycle[],
-    activeCycleId: string | null
-}
-
 export function CyclesContextProvider({ children }: CycleProviderChildrenProps) {
-    const [cycles, dispacth] = useReducer((state: CycleState, action: any) => {
-        switch (action.type) {
-            case 'createNewCycle':
-                return {
-                    ...state,
-                    cycle: [...state.cycle, action.payload.newCycle],
-                    activeCycleId: action.payload.newCycle.id
-                }
-
-            case 'resetCycle':
-                return {
-                    ...state,
-                    cycle: state.cycle.map((data) => {
-                        if (data.id === state.activeCycleId) {
-                            return { ...data, stopedDate: new Date() }
-                        } else {
-                            return data
-                        }
-                    }),
-                    activeCycleId: null
-                }
-
-            case 'finishedCycle':
-                return {
-                    ...state,
-                    cycle: state.cycle.map(data => {
-                        if (data.id === state.activeCycleId) {
-                            return { ...data, finishedDate: new Date() }
-                        } else {
-                            return data
-                        }
-                    }),
-                    activeCycleId: null
-                }
-
-            default:
-                return state
-        }
-
-    }, {
+    const [cycles, dispacth] = useReducer(cyclesReducer, {
         cycle: [],
         activeCycleId: null
     }, (initialState) => {
@@ -110,12 +58,7 @@ export function CyclesContextProvider({ children }: CycleProviderChildrenProps) 
     }, [cycles])
 
     const finishedCycle = () => {
-        dispacth({
-            type: 'finishedCycle',
-            payload: {
-                activeCycleId
-            }
-        })
+        dispacth(setFinishedCycleAction())
         setSecondsTake(0)
     }
 
@@ -131,22 +74,12 @@ export function CyclesContextProvider({ children }: CycleProviderChildrenProps) 
             startDate: new Date()
         }
 
-        dispacth({
-            type: 'createNewCycle',
-            payload: {
-                newCycle
-            }
-        })
+        dispacth(addNewCycleAction(newCycle))
         setSecondsTake(0)
     }
 
     const resetCycle = () => {
-        dispacth({
-            type: 'resetCycle',
-            payload: {
-                activeCycleId
-            }
-        })
+        dispacth(resetCycleAction())
         setSecondsTake(0)
     }
 
