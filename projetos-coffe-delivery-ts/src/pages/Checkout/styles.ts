@@ -100,7 +100,7 @@ export const OrderFormPaymentContent = styled.div`
         font-weight: 100;
 
         & span {
-            color: ${props => props.theme["purple-dark"]};
+            color: ${props => props.theme["purple"]};
         }
     }
 
@@ -142,6 +142,11 @@ export const PaymentTypesContent = styled.div`
             background-color: ${props => props.theme["purple-light"]};
             border: 1px solid ${props => props.theme["purple"]};
         }
+    }
+
+    .selected {
+        background-color: ${props => props.theme["purple-light"]};
+        border: 1px solid ${props => props.theme["purple"]};
     }
 `
 
@@ -278,8 +283,14 @@ export const OrderTotalPricingContent = styled.div`
 
         transition: all 0.2s;
 
-        &:hover {
+        &:not(:disabled):hover {
             background-color: ${props => props.theme["yellow-dark"]};
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            background-color: ${props => props.theme["yellow-dark"]};
+            opacity: 0.5;
         }
     }
 `

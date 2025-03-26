@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Header from "../../components/Header";
 import {
     CheckoutContanier,
@@ -23,10 +23,32 @@ import {
     Plus,
     Trash
 } from '@phosphor-icons/react';
-import { ItensContext } from "../../context/ItensContext";
 
+import { ItensContext } from "../../context/ItensContext";
+import { useForm } from "react-hook-form";
+
+import * as zod from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const onSubmitFormValidationSchema = zod.object({
+    cep: zod.string().min(8, 'CEP é obrigatório').max(8),
+    street: zod.string().min(1, 'Rua é obrigatória'),
+    number: zod.string().min(1, 'Número da residência é obrigatório'),
+    neighborhood: zod.string().min(1, 'Bairro é obrigatório'),
+    city: zod.string().min(1, 'Cidade é obrigatória'),
+    uf: zod.string().min(2, 'Cidade é obrigatória').max(2),
+
+})
+
+type FormInfo = zod.infer<typeof onSubmitFormValidationSchema>
 
 export default function Checkout() {
+    const [paymenytType, setPaymenytType] = useState<'pix' | 'cash' | 'credit' | null>(null)
+
+    const { register } = useForm<FormInfo>({
+        resolver: zodResolver(onSubmitFormValidationSchema)
+    })
+
     const { itensInTheCart,
         removeItemInTheCart,
         updateItemInTheCart } = useContext(ItensContext)
@@ -48,32 +70,43 @@ export default function Checkout() {
         updateItemInTheCart(id, increment)
     }
 
+
     return (
         <>
             <Header />
             <CheckoutContanier>
                 <OrderContent>
                     <h2>Complete seu pedido</h2>
-                    <OrderFormContent>
+                    <OrderFormContent id="addressOrder">
                         <h3><span><MapPinLine size={23} /></span>Endereço de Entrega</h3>
                         <p>Informe o endereço onde deseja receber seu pedido</p>
                         <OrderFormInputsContent>
-                            <input id="cep" type="text" placeholder="CEP" />
-                            <input id="street" type="text" placeholder="Rua" />
-                            <input id="number" type="number" placeholder="Número" />
+                            <input id="cep" type="text" placeholder="CEP" {...register('cep')} />
+                            <input id="street" type="text" placeholder="Rua" {...register('street')} />
+                            <input id="number" type="number" placeholder="Número" {...register('number')} />
                             <input id="complement" type="text" placeholder="Complemento" />
-                            <input id="neighborhood" type="text" placeholder="Bairro" />
-                            <input id="city" type="text" placeholder="Cidade" />
-                            <input id="uf" type="text" placeholder="UF" />
+                            <input id="neighborhood" type="text" placeholder="Bairro" {...register('neighborhood')} />
+                            <input id="city" type="text" placeholder="Cidade" {...register('city')} />
+                            <input id="uf" type="text" placeholder="UF" {...register('uf')} />
                         </OrderFormInputsContent>
                     </OrderFormContent>
                     <OrderFormPaymentContent>
                         <h3><span><CurrencyDollarSimple size={23} /></span>Pagamento</h3>
                         <p>O pagamento é feito na entrega. Escolha a forma que deseja pagar</p>
                         <PaymentTypesContent>
-                            <button><span><CreditCard size={17} /></span>CARTÃO DE CRÉDITO</button>
-                            <button><span><Money size={17} /></span>DINHEIRO</button>
-                            <button><span><PixLogo size={17} /></span>PIX</button>
+                            {/* FORMA INTERESANTE DE CLASSIFICAR SELECIONADOS */}
+                            <button onClick={() => setPaymenytType('credit')} className={paymenytType === 'credit' ? 'selected' : ''}>
+                                <span><CreditCard size={17} /></span>
+                                CARTÃO DE CRÉDITO
+                            </button>
+                            <button onClick={() => setPaymenytType('cash')} className={paymenytType === 'cash' ? 'selected' : ''}>
+                                <span><Money size={17} /></span>
+                                DINHEIRO
+                            </button>
+                            <button onClick={() => setPaymenytType('pix')} className={paymenytType === 'pix' ? 'selected' : ''}>
+                                <span><PixLogo size={17} /></span>
+                                PIX
+                            </button>
                         </PaymentTypesContent>
                     </OrderFormPaymentContent>
                 </OrderContent>
@@ -107,7 +140,7 @@ export default function Checkout() {
                             <div>Total de itens<span>R$ {sumOfTotalItens().toFixed(2).replace('.', ',')}</span></div>
                             <div>Entrega<span>R$ 5,00</span></div>
                             <div className="totalOrder">Total<span>R$ {(sumOfTotalItens() + 5).toFixed(2).replace('.', ',')}</span></div>
-                            <button>CONFIRMAR PEDIDO</button>
+                            <button type="submit" form="addressOrder" disabled={!paymenytType}>CONFIRMAR PEDIDO</button>
                         </OrderTotalPricingContent>
                     </OrderPricingDetailContent>
                 </OrderDetailContent>
