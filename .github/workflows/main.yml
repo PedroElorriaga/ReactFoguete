@@ -14,3 +14,4 @@ jobs:
         uses: yoshi389111/Github-Profile-3D-Contrib@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: PedroElorriaga
