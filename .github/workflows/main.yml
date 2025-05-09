@@ -1,4 +1,4 @@
-name: Build and Commit
+name: Generate 3D Contribution Graph
 
 on:
   workflow_dispatch:
@@ -6,18 +6,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm install
-      - run: npm run build
-      - run: |
-          git config user.name github-actions
-          git config user.email github-actions[bot]@users.noreply.github.com
-          git add dist/
-          if git commit -m "Update build" ; then
-            git push origin HEAD:main
-          fi
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Generate 3D Contribution Graph
+        uses: yoshi389111/Github-Profile-3D-Contrib@main
